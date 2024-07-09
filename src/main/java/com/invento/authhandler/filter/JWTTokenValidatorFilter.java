@@ -3,6 +3,7 @@ package com.invento.authhandler.filter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.crypto.SecretKey;
 
@@ -56,6 +57,9 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 	
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest  request) {
-	 return request.getServletPath().equals("/auth/login");
+		
+		List<String> requests = Arrays.asList("/auth/logout", "/auth/login");
+		return requests.contains(request.getServletPath());
+		//return request.getServletPath().equals("/auth/login");
 	}
 }
