@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "invento.jwt.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'invento.jwt.secret'"
+  },
+  {
+    "name": "authentication.jwt.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'authentication.jwt.secret'"
+  }
+]}
