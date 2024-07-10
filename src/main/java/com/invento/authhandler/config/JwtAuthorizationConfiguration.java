@@ -57,6 +57,7 @@ public class JwtAuthorizationConfiguration {
 			.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
 			.authorizeHttpRequests(request -> request
 				.requestMatchers(Constants.SWAGGER_WHITELIST).permitAll()
+				.requestMatchers("/auth/logout").permitAll()
 				.requestMatchers("/auth/addAuthority", "/auth/deleteAuthority", "/auth/updateAuthority")
 					.hasAnyRole(Constants.ROLE_INVENTO_ADMIN, Constants.ROLE_INVENTO_WRITE)
 				.requestMatchers("/auth/getAuthorities")
@@ -65,6 +66,7 @@ public class JwtAuthorizationConfiguration {
 				.requestMatchers("/auth/**").authenticated())
 			.oauth2Login(oauth2 -> oauth2.userInfoEndpoint(e -> 
 				e.oidcUserService(customOidcUserService())))
+			.logout(logout -> logout.logoutSuccessUrl("/auth/logout"))
 			.httpBasic(Customizer.withDefaults());
 		return http.build();
 	}

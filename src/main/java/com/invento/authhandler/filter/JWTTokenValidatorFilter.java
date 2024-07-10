@@ -26,6 +26,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 	
+	private static final String[] SHOULD_NOT_FILTER = {"/auth/logout", "/auth/login"}; 
+	
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) 
 			throws ServletException, IOException {
 
@@ -56,6 +58,8 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 	
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest  request) {
-	 return request.getServletPath().equals("/auth/login");
+		
+		
+		return Arrays.asList(SHOULD_NOT_FILTER).contains(request.getServletPath());
 	}
 }
