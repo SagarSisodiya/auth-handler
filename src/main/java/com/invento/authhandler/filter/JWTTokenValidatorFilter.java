@@ -3,7 +3,6 @@ package com.invento.authhandler.filter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.crypto.SecretKey;
 
@@ -26,6 +25,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class JWTTokenValidatorFilter extends OncePerRequestFilter {
+	
+	private static final String[] SHOULD_NOT_FILTER = {"/auth/logout", "/auth/login"}; 
 	
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) 
 			throws ServletException, IOException {
@@ -58,8 +59,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest  request) {
 		
-		List<String> requests = Arrays.asList("/auth/logout", "/auth/login");
-		return requests.contains(request.getServletPath());
-		//return request.getServletPath().equals("/auth/login");
+		
+		return Arrays.asList(SHOULD_NOT_FILTER).contains(request.getServletPath());
 	}
 }
